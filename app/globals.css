@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 默认亮色主题变量 */
+:root {
+  --primary: 94, 234, 212;
+  --secondary: 59, 130, 246;
+  --accent: 139, 92, 246;
+  --background: 255, 255, 255;
+  --foreground: 15, 23, 42;
+  --surface: 241, 245, 249;
+}
+
+/* 暗色主题变量 */
+.dark {
+  --primary: 94, 234, 212;
+  --secondary: 59, 130, 246;
+  --accent: 139, 92, 246;
+  --background: 2, 6, 23;
+  --foreground: 248, 250, 252;
+  --surface: 15, 23, 42;
+}
+
+/* 添加主题切换过渡效果 */
+:root {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+/* 全局过渡效果 */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* 基础样式 */
+body {
+  color: rgb(var(--foreground));
+  background: rgb(var(--background));
+  min-height: 100vh;
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(var(--primary), 0.15), transparent 25%),
+    radial-gradient(circle at 0% 50%, rgba(var(--secondary), 0.1), transparent 25%),
+    radial-gradient(circle at 100% 50%, rgba(var(--accent), 0.1), transparent 25%);
+}
+
+/* 科幻玻璃效果 */
+.glass-effect {
+  background: rgba(var(--surface), 0.5);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(var(--primary), 0.1);
+  box-shadow: 0 0 20px rgba(var(--primary), 0.1);
+}
+
+/* 悬浮发光效果 */
+.hover-glow {
+  transition: all 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(var(--primary), 0.3);
+  transform: translateY(-2px);
+}
+
+/* 科幻文本渐变 */
+.text-gradient {
+  background: linear-gradient(
+    135deg,
+    rgb(var(--primary)),
+    rgb(var(--secondary))
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* 科幻边框发光 */
+.border-glow {
+  position: relative;
+}
+
+.border-glow::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(
+    135deg,
+    rgba(var(--primary), 0.5),
+    rgba(var(--secondary), 0.5)
+  );
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.border-glow:hover::after {
+  opacity: 1;
+}
+
+/* 动态背景网格 */
+.grid-background {
+  background-image: linear-gradient(rgba(var(--primary), 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--primary), 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(var(--surface), 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--primary), 0.5);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--primary), 0.8);
+}
+
+/* 响应式布局辅助类 */
+@layer utilities {
+  .mobile-container {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+
+  .desktop-container {
+    @apply max-w-7xl mx-auto;
+  }
+}
