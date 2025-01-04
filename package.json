@@ -13,7 +13,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@heroicons/react": "^2.1.1",
+    "@heroicons/react": "^2.2.0",
     "autoprefixer": "^10.4.16",
     "next": "^14.0.4",
     "postcss": "^8.4.32",
@@ -31,7 +31,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-react": "^7.31.0",
     "eslint-plugin-react-hooks": "^5.1.0",
-    "prettier": "^2.8.0",
+    "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.9",
     "typescript": "5.7.2"
   }
