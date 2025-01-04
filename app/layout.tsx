@@ -1,7 +1,6 @@
+import { ClientLayout } from '@/components/ClientLayout'
 import type { Metadata } from 'next'
 import './globals.css'
-import { LanguageProvider } from './LanguageProvider'
-import { ThemeProvider } from './ThemeProvider'
 
 export const metadata: Metadata = {
   title: 'AI 导航',
@@ -9,13 +8,5 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang='zh' suppressHydrationWarning>
-      <body className='min-h-screen'>
-        <LanguageProvider>
-          <ThemeProvider>{children}</ThemeProvider>
-        </LanguageProvider>
-      </body>
-    </html>
-  )
+  return <ClientLayout>{children}</ClientLayout>
 }

@@ -7,6 +7,7 @@ import { createContext, ReactNode, useContext } from 'react'
 interface LanguageContextType {
   language: Language
   setLanguage: (lang: Language) => void
+  mounted: boolean
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)

@@ -1,10 +1,8 @@
 'use client'
 
 import { useLanguageContext } from '@/app/LanguageProvider'
-import { translations } from '@/lib/i18n'
 import { Tool } from '@/types/tool'
-import { Cursor, Perplexity } from '@lobehub/icons'
-import { useMemo } from 'react'
+import { Cursor, DeepSeek, Perplexity } from '@lobehub/icons'
 
 interface ToolCardProps {
   tool: Tool
@@ -12,34 +10,13 @@ interface ToolCardProps {
 
 export function ToolCard({ tool }: ToolCardProps) {
   const { language } = useLanguageContext()
-  const t = translations[language]
-
-  const themeColor = useMemo(() => {
-    switch (tool.name.toLowerCase()) {
-      case 'cursor':
-        return 'cursor'
-      case 'perplexity':
-        return 'perplexity'
-      default:
-        return 'gray'
-    }
-  }, [tool.name])
-
-  const Logo = useMemo(() => {
-    switch (tool.name.toLowerCase()) {
-      case 'cursor':
-        return <Cursor size={48} />
-      case 'perplexity':
-        return <Perplexity size={48} />
-      default:
-        return null
-    }
-  }, [tool.name])
 
   const handleCompanyClick = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
-    window.open(tool.companyLink, '_blank', 'noopener,noreferrer')
+    if (tool.companyLink) {
+      window.open(tool.companyLink, '_blank', 'noopener,noreferrer')
+    }
   }
 
   const formatDate = (dateString: string) => {
@@ -51,55 +28,109 @@ export function ToolCard({ tool }: ToolCardProps) {
     })
   }
 
+  const getToolStyles = () => {
+    switch (tool.name.toLowerCase()) {
+      case 'cursor':
+        return {
+          hover: 'hover:border-cursor hover:shadow-cursor',
+          groupHover: 'group-hover:text-cursor group-hover:border-cursor',
+          dark: 'dark:hover:border-cursor/30 dark:group-hover:text-cursor dark:group-hover:border-cursor/30',
+        }
+      case 'perplexity':
+        return {
+          hover: 'hover:border-perplexity hover:shadow-perplexity',
+          groupHover: 'group-hover:text-perplexity group-hover:border-perplexity',
+          dark: 'dark:hover:border-perplexity/30 dark:group-hover:text-perplexity dark:group-hover:border-perplexity/30',
+        }
+      case 'deepseek':
+        return {
+          hover: 'hover:border-deepseek hover:shadow-deepseek',
+          groupHover: 'group-hover:text-deepseek group-hover:border-deepseek',
+          dark: 'dark:hover:border-deepseek/30 dark:group-hover:text-deepseek dark:group-hover:border-deepseek/30',
+        }
+      default:
+        return {
+          hover: 'hover:border-gray-200 hover:shadow-lg',
+          groupHover: 'group-hover:text-gray-900 group-hover:border-gray-200',
+          dark: 'dark:hover:border-gray-700 dark:group-hover:text-gray-100 dark:group-hover:border-gray-700',
+        }
+    }
+  }
+
+  const getLogo = () => {
+    switch (tool.name.toLowerCase()) {
+      case 'cursor':
+        return <Cursor size={64} />
+      case 'perplexity':
+        return <Perplexity.Color size={64} />
+      case 'deepseek':
+        return <DeepSeek.Color size={64} />
+      default:
+        return null
+    }
+  }
+
+  const styles = getToolStyles()
+
   return (
     <a
       href={tool.officialWebsiteLink}
       target='_blank'
       rel='noopener noreferrer'
-      className={`group relative block rounded-lg border border-gray-100 bg-white p-4 transition-all hover:border-${themeColor} hover:shadow-lg dark:border-white/10 dark:bg-gray-900/50 dark:hover:border-${themeColor}/30`}
+      className={`group block rounded-lg border border-gray-100 bg-white p-4 transition-all ${styles.hover} ${styles.dark} dark:border-white/10 dark:bg-gray-900/50`}
       title={tool.officialWebsiteLink}
     >
       <div className='flex items-start gap-4'>
         <div
-          className={`relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg border border-gray-100 bg-white p-2 group-hover:border-${themeColor} dark:border-white/10 dark:bg-gray-900 dark:group-hover:border-${themeColor}/30`}
+          className={`relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-lg border border-gray-100 bg-white p-2 transition-colors ${styles.groupHover} ${styles.dark} dark:border-white/10 dark:bg-gray-900`}
         >
-          {Logo}
+          {getLogo()}
         </div>
-        <div className='flex-1'>
+        <div className='min-w-0 flex-1'>
           <div className='flex items-center justify-between'>
-            <div>
+            <div className='min-w-0'>
               <div className='flex items-center gap-2'>
                 <h3
-                  className={`text-lg font-medium text-gray-900 group-hover:text-${themeColor} dark:text-gray-100 dark:group-hover:text-${themeColor}`}
+                  className={`text-lg font-medium text-gray-900 ${styles.groupHover} dark:text-gray-100 ${styles.dark}`}
                 >
                   {tool.name}
                 </h3>
-                <span
-                  className={`text-sm text-gray-500 group-hover:text-${themeColor}/80 dark:text-gray-400 dark:group-hover:text-${themeColor}/80`}
-                >
+                <span className='truncate text-sm text-gray-500 dark:text-gray-400'>
                   {tool.description[language]}
                 </span>
                 {tool.releaseDate && (
-                  <span className='text-xs text-gray-400 dark:text-gray-500'>
+                  <span className='shrink-0 text-xs text-gray-400 dark:text-gray-500'>
                     {language === 'zh' ? '发布于 ' : 'Released '}
                     {formatDate(tool.releaseDate)}
                   </span>
                 )}
               </div>
-              <div className='mt-1 flex items-center gap-2'>
+              <div className='mt-1 flex min-w-0 items-center gap-2'>
                 <button
                   onClick={handleCompanyClick}
-                  className={`text-sm text-gray-500 hover:text-${themeColor} dark:text-gray-400 dark:hover:text-${themeColor}`}
+                  className={`text-sm text-gray-500 ${styles.groupHover} dark:text-gray-400 ${styles.dark} truncate`}
+                  title={tool.company}
                 >
                   {tool.company}
                 </button>
-                <span className='text-xs text-gray-400 dark:text-gray-500'>
-                  {tool.isDomestic ? t.domestic : t.foreign}
+                {tool.companyInfo?.type && (
+                  <span className='shrink-0 text-xs text-gray-400 dark:text-gray-500'>
+                    {tool.companyInfo.type[language]}
+                  </span>
+                )}
+                <span className='shrink-0 text-xs text-gray-400 dark:text-gray-500'>
+                  {tool.isDomestic
+                    ? language === 'zh'
+                      ? '国内'
+                      : 'Domestic'
+                    : language === 'zh'
+                      ? '国外'
+                      : 'Foreign'}
                 </span>
               </div>
             </div>
             <svg
-              className={`h-5 w-5 text-gray-400 transition-transform group-hover:translate-x-1 group-hover:text-${themeColor} dark:text-gray-500 dark:group-hover:text-${themeColor}/80`}
+              className={`h-5 w-5 text-gray-400 transition-transform ${styles.groupHover} group-hover:translate-x-1 dark:text-gray-500 ${styles.dark} shrink-0`}
               fill='none'
               viewBox='0 0 24 24'
               stroke='currentColor'
@@ -132,8 +163,6 @@ export function ToolCard({ tool }: ToolCardProps) {
                 </svg>
                 {tool.companyInfo.location[language]}
               </span>
-              <span className='mx-2'>·</span>
-              <span>{tool.companyInfo.type[language]}</span>
             </div>
           )}
         </div>

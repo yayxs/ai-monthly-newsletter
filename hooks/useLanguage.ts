@@ -3,27 +3,37 @@
 import { Language } from '@/lib/i18n'
 import { useEffect, useState } from 'react'
 
+// 获取初始语言
+const getInitialLanguage = (): Language => {
+  if (typeof window === 'undefined') return 'zh'
+  return (localStorage.getItem('language') as Language) || 'zh'
+}
+
 export function useLanguage() {
-  const [language, setLanguage] = useState<Language>('zh')
+  // 确保服务器端和客户端初始值一致
+  const [language, setLanguageState] = useState<Language>('zh')
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    setMounted(true)
     const savedLanguage = localStorage.getItem('language') as Language
     if (savedLanguage) {
-      setLanguage(savedLanguage)
+      setLanguageState(savedLanguage)
     }
+    setMounted(true)
   }, [])
 
-  const setLanguageWithSave = (newLanguage: Language) => {
-    setLanguage(newLanguage)
+  const setLanguage = (newLanguage: Language) => {
+    setLanguageState(newLanguage)
     if (mounted) {
       localStorage.setItem('language', newLanguage)
+      // 更新 html 的 lang 属性
+      document.documentElement.lang = newLanguage
     }
   }
 
   return {
     language,
-    setLanguage: setLanguageWithSave,
+    setLanguage,
+    mounted,
   }
 }
