@@ -10,4 +10,16 @@ export interface Tool {
     en: string
     zh: string
   }
+  companyInfo?: {
+    foundedDate: string
+    location: {
+      en: string
+      zh: string
+    }
+    type: {
+      en: string
+      zh: string
+    }
+  }
+  releaseDate?: string
 }

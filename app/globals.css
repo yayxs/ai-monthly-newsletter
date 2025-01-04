@@ -2,31 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --primary: 0, 112, 243;
-  --secondary: 99, 102, 241;
-  --accent: 168, 85, 247;
-  --background: 248, 250, 252;
-  --foreground: 15, 23, 42;
-  --surface: 255, 255, 255;
+@layer base {
+  :root {
+    --cursor-color: 25, 25, 25;
+    --cursor-color-dark: 230, 230, 230;
+    --perplexity-color: 33, 128, 141;
+    --perplexity-color-dark: 33, 128, 141;
+  }
+
+  body {
+    @apply bg-white text-gray-900 transition-colors duration-200;
+  }
+
+  .dark body {
+    @apply bg-gray-900 text-gray-100;
+  }
 }
 
-.dark {
-  --primary: 94, 234, 212;
-  --secondary: 59, 130, 246;
-  --accent: 139, 92, 246;
-  --background: 2, 6, 23;
-  --foreground: 248, 250, 252;
-  --surface: 15, 23, 42;
-}
+@layer components {
+  .hover\:shadow-cursor {
+    --tw-shadow-color: rgb(var(--cursor-color) / 0.05);
+    --tw-shadow: 0 10px 15px -3px var(--tw-shadow-color);
+    box-shadow: var(--tw-shadow);
+  }
 
-body {
-  background-color: rgb(var(--background));
-  color: rgb(var(--foreground));
-}
+  .hover\:shadow-perplexity {
+    --tw-shadow-color: rgb(var(--perplexity-color) / 0.05);
+    --tw-shadow: 0 10px 15px -3px var(--tw-shadow-color);
+    box-shadow: var(--tw-shadow);
+  }
 
-.grid-background {
-  background-image: linear-gradient(to right, rgb(var(--primary) / 0.1) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(var(--primary) / 0.1) 1px, transparent 1px);
-  background-size: 24px 24px;
+  .dark .hover\:shadow-cursor {
+    --tw-shadow-color: rgb(var(--cursor-color-dark) / 0.05);
+  }
+
+  .dark .hover\:shadow-perplexity {
+    --tw-shadow-color: rgb(var(--perplexity-color-dark) / 0.05);
+  }
 }

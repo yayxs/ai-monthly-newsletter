@@ -1,74 +1,56 @@
 'use client'
 
-import { Theme, themeColors } from '@/lib/themes'
 import { useEffect, useState } from 'react'
 
-// 更新 DOM 中的主题颜色
-function updateThemeColors(colors: (typeof themeColors)['light']) {
-  const root = document.documentElement
-  Object.entries(colors).forEach(([key, value]) => {
-    root.style.setProperty(`--${key}`, value)
-  })
+export type Theme = 'light' | 'dark'
+
+// 从localStorage获取保存的主题
+const getSavedTheme = (): Theme => {
+  if (typeof window === 'undefined') return 'light'
+  return (localStorage.getItem('theme') as Theme) || 'light'
 }
 
-// 更新 HTML 的 class
-function updateHtmlClass(theme: 'light' | 'dark') {
-  const html = document.documentElement
-  html.classList.remove('light', 'dark')
-  html.classList.add(theme)
+// 应用主题到DOM
+const applyTheme = (theme: Theme) => {
+  if (typeof window === 'undefined') return
+
+  const root = document.documentElement
+  const body = document.body
+
+  // 移除所有主题相关的class
+  root.classList.remove('light', 'dark')
+  body.classList.remove('light', 'dark')
+
+  // 添加新的主题class
+  root.classList.add(theme)
+  body.classList.add(theme)
+
+  // 更新html的data-theme属性
+  root.setAttribute('data-theme', theme)
 }
 
 export function useTheme() {
-  const [theme, setTheme] = useState<Theme>('light')
-  const [systemTheme, setSystemTheme] = useState<'light' | 'dark'>('light')
+  const [theme, setThemeState] = useState<Theme>(getSavedTheme)
   const [mounted, setMounted] = useState(false)
 
-  // 初始化系统主题和保存的主题
+  // 设置主题
+  const setTheme = (newTheme: Theme) => {
+    setThemeState(newTheme)
+    localStorage.setItem('theme', newTheme)
+    applyTheme(newTheme)
+  }
+
+  // 初始化主题
   useEffect(() => {
     setMounted(true)
-    const savedTheme = localStorage.getItem('theme') as Theme
-    if (savedTheme) {
-      setTheme(savedTheme)
-    }
-
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    const initialTheme = mediaQuery.matches ? 'dark' : 'light'
-    setSystemTheme(initialTheme)
-
-    const handler = (e: MediaQueryListEvent) => {
-      const newTheme = e.matches ? 'dark' : 'light'
-      setSystemTheme(newTheme)
-      if (theme === 'system') {
-        updateThemeColors(themeColors[newTheme])
-        updateHtmlClass(newTheme)
-      }
-    }
-
-    mediaQuery.addEventListener('change', handler)
-    return () => mediaQuery.removeEventListener('change', handler)
-  }, [theme])
-
-  const currentTheme = theme === 'system' ? systemTheme : theme
-
-  // 当主题变化时更新 DOM
-  useEffect(() => {
-    if (mounted) {
-      updateThemeColors(themeColors[currentTheme])
-      updateHtmlClass(currentTheme)
-    }
-  }, [currentTheme, mounted])
-
-  const setThemeWithSave = (newTheme: Theme) => {
-    setTheme(newTheme)
-    if (mounted) {
-      localStorage.setItem('theme', newTheme)
-    }
-  }
+    const savedTheme = getSavedTheme()
+    setThemeState(savedTheme)
+    applyTheme(savedTheme)
+  }, [])
 
   return {
     theme,
-    setTheme: setThemeWithSave,
-    currentTheme,
-    colors: themeColors[currentTheme],
+    setTheme,
+    mounted,
   }
 }
