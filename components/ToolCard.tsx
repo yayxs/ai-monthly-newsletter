@@ -72,11 +72,27 @@ export function ToolCard({ tool }: ToolCardProps) {
 
   const styles = getToolStyles()
 
+  const handleClick = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // 记录工具点击
+    try {
+      await fetch('/api/analytics/click', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ toolId: tool.id }),
+      })
+    } catch (error) {
+      console.error('Error recording tool click:', error)
+    }
+  }
+
   return (
     <a
       href={tool.officialWebsiteLink}
       target='_blank'
       rel='noopener noreferrer'
+      onClick={handleClick}
       className={`group block rounded-lg border border-gray-100 bg-white p-4 transition-all ${styles.hover} ${styles.dark} dark:border-white/10 dark:bg-gray-900/50`}
       title={tool.officialWebsiteLink}
     >
