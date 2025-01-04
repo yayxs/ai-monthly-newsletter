@@ -24,29 +24,29 @@ export function ToolCard({ tool }: ToolCardProps) {
       href={tool.officialWebsiteLink}
       target='_blank'
       rel='noopener noreferrer'
-      className='group relative block rounded-lg border border-gray-100 bg-white p-4 transition-all hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5 dark:border-white/10 dark:bg-white/5'
+      className='hover:border-cursor hover:shadow-cursor/5 dark:hover:border-cursor-dark/30 group relative block rounded-lg border border-gray-100 bg-white p-4 transition-all hover:shadow-lg dark:border-white/10 dark:bg-gray-900/50'
       title={tool.officialWebsiteLink}
     >
       <div className='flex items-center gap-4'>
         {tool.logo && (
-          <div className='relative h-12 w-12 overflow-hidden rounded-lg border border-gray-100 bg-white p-2 dark:border-white/10 dark:bg-white/5'>
+          <div className='group-hover:border-cursor dark:group-hover:border-cursor-dark/30 relative h-12 w-12 overflow-hidden rounded-lg border border-gray-100 bg-white p-2 dark:border-white/10 dark:bg-gray-900'>
             <Image src={tool.logo} alt={`${tool.name} logo`} fill className='object-contain' />
           </div>
         )}
         <div className='flex flex-1 items-center justify-between'>
           <div>
             <div className='flex items-center gap-2'>
-              <h3 className='text-lg font-medium text-gray-900 group-hover:text-primary dark:text-white'>
+              <h3 className='group-hover:text-cursor dark:group-hover:text-cursor-dark text-lg font-medium text-gray-900 dark:text-gray-100'>
                 {tool.name}
               </h3>
-              <span className='text-sm text-gray-500 dark:text-gray-400'>
+              <span className='group-hover:text-cursor/80 dark:group-hover:text-cursor-dark/80 text-sm text-gray-500 dark:text-gray-400'>
                 {tool.description[language]}
               </span>
             </div>
             <div className='mt-1 flex items-center gap-2'>
               <button
                 onClick={handleCompanyClick}
-                className='text-sm text-gray-500 hover:text-primary dark:text-gray-400'
+                className='hover:text-cursor dark:hover:text-cursor-dark text-sm text-gray-500 dark:text-gray-400'
               >
                 {tool.company}
               </button>
@@ -56,7 +56,7 @@ export function ToolCard({ tool }: ToolCardProps) {
             </div>
           </div>
           <svg
-            className='h-5 w-5 text-gray-400 transition-transform group-hover:translate-x-1 group-hover:text-primary'
+            className='group-hover:text-cursor dark:group-hover:text-cursor-dark/80 h-5 w-5 text-gray-400 transition-transform group-hover:translate-x-1 dark:text-gray-500'
             fill='none'
             viewBox='0 0 24 24'
             stroke='currentColor'
