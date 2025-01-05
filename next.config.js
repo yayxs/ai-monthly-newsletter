@@ -14,15 +14,22 @@ const nextConfig = {
         hostname: 'raw.githubusercontent.com',
       },
     ],
-    unoptimized: true,
+    formats: ['image/avif', 'image/webp'],
   },
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
   swcMinify: true,
-  i18n: {
-    locales: ['zh', 'en'],
-    defaultLocale: 'zh',
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+  experimental: {
+    optimizeCss: true,
+    turbo: {
+      loaders: {
+        '.svg': ['@svgr/webpack'],
+      },
+    },
   },
   async headers() {
     return [
