@@ -14,17 +14,12 @@ const nextConfig = {
         hostname: 'raw.githubusercontent.com',
       },
     ],
-    minimumCacheTTL: 60,
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    unoptimized: true,
   },
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
   swcMinify: true,
-  experimental: {
-    optimizeCss: true,
-  },
   i18n: {
     locales: ['zh', 'en'],
     defaultLocale: 'zh',
