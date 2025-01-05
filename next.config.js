@@ -2,6 +2,8 @@
 const nextConfig = {
   env: {
     BUILD_TIME: new Date().toISOString(),
+    VERCEL_GIT_COMMIT_SHA: process.env.VERCEL_GIT_COMMIT_SHA || '',
+    VERCEL_GIT_COMMIT_REF: process.env.VERCEL_GIT_COMMIT_REF || '',
   },
   images: {
     remotePatterns: [
@@ -73,6 +75,14 @@ const nextConfig = {
       },
     ]
   },
+}
+
+// 输出构建信息
+if (process.env.VERCEL) {
+  console.log('Build info:')
+  console.log('Commit SHA:', process.env.VERCEL_GIT_COMMIT_SHA)
+  console.log('Branch:', process.env.VERCEL_GIT_COMMIT_REF)
+  console.log('Build time:', new Date().toISOString())
 }
 
 module.exports = nextConfig
