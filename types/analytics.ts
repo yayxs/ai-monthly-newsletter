@@ -23,12 +23,19 @@ export interface ToolClick {
   created_at: string
 }
 
+export interface DailyStat {
+  date: string
+  total_views: number
+  unique_visitors: number
+}
+
 export interface AnalyticsSummary {
   total_views: number
   today_views: number
   unique_visitors: number
-  popular_tools: Array<{
-    tool_id: number
+  daily_stats: DailyStat[]
+  popular_tools: {
+    tool_id: string
     clicks: number
-  }>
+  }[]
 }
