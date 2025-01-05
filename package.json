@@ -19,6 +19,7 @@
     "@supabase/supabase-js": "^2.47.10",
     "@vercel/kv": "^3.0.0",
     "autoprefixer": "^10.4.16",
+    "critters": "^0.0.25",
     "next": "^14.0.4",
     "postcss": "^8.4.32",
     "react": "^18.2.0",

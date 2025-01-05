@@ -24,15 +24,12 @@ const nextConfig = {
   swcMinify: true,
   experimental: {
     optimizeCss: true,
-    scrollRestoration: true,
   },
-  output: 'standalone',
   i18n: {
     locales: ['zh', 'en'],
     defaultLocale: 'zh',
-    localeDetection: true,
   },
-  headers: async () => {
+  async headers() {
     return [
       {
         source: '/:all*(svg|jpg|png|webp)',
@@ -73,16 +70,6 @@ const nextConfig = {
         ],
       },
     ]
-  },
-  async redirects() {
-    return []
-  },
-  async rewrites() {
-    return {
-      beforeFiles: [],
-      afterFiles: [],
-      fallback: [],
-    }
   },
 }
 
