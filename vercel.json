@@ -10,10 +10,6 @@
           "value": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=86400"
         },
         {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
-        },
-        {
           "key": "X-Content-Type-Options",
           "value": "nosniff"
         },
@@ -24,39 +20,10 @@
         {
           "key": "X-XSS-Protection",
           "value": "1; mode=block"
-        },
-        {
-          "key": "Permissions-Policy",
-          "value": "camera=(), microphone=(), geolocation=()"
-        }
-      ]
-    },
-    {
-      "source": "/(.+\\.(?:png|jpg|webp|svg|gif))",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/_next/static/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
         }
       ]
     }
   ],
-  "build": {
-    "env": {
-      "NEXT_PUBLIC_API_URL": "@next_public_api_url",
-      "NEXT_PUBLIC_SUPABASE_URL": "@next_public_supabase_url",
-      "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@next_public_supabase_anon_key"
-    }
-  },
   "git": {
     "deploymentEnabled": {
       "main": true
@@ -64,7 +31,6 @@
   },
   "github": {
     "enabled": true,
-    "silent": true,
-    "autoAlias": true
+    "silent": false
   }
 }

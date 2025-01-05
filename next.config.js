@@ -16,7 +16,6 @@ const nextConfig = {
         hostname: 'raw.githubusercontent.com',
       },
     ],
-    formats: ['image/avif', 'image/webp'],
   },
   compress: true,
   poweredByHeader: false,
@@ -24,14 +23,6 @@ const nextConfig = {
   swcMinify: true,
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
-  },
-  experimental: {
-    optimizeCss: true,
-    turbo: {
-      loaders: {
-        '.svg': ['@svgr/webpack'],
-      },
-    },
   },
   async headers() {
     return [
