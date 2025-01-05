@@ -3,6 +3,7 @@
 import { useLanguageContext } from '@/app/LanguageProvider'
 import { Tool } from '@/types/tool'
 import { Cursor, DeepSeek, Perplexity } from '@lobehub/icons'
+import Image from 'next/image'
 
 interface ToolCardProps {
   tool: Tool
@@ -48,6 +49,24 @@ export function ToolCard({ tool }: ToolCardProps) {
           groupHover: 'group-hover:text-deepseek group-hover:border-deepseek',
           dark: 'dark:hover:border-deepseek/30 dark:group-hover:text-deepseek dark:group-hover:border-deepseek/30',
         }
+      case 'monica':
+        return {
+          hover: 'hover:border-monica hover:shadow-monica',
+          groupHover: 'group-hover:text-monica group-hover:border-monica',
+          dark: 'dark:hover:border-monica/30 dark:group-hover:text-monica dark:group-hover:border-monica/30',
+        }
+      case 'marscode':
+        return {
+          hover: 'hover:border-marscode hover:shadow-marscode',
+          groupHover: 'group-hover:text-marscode group-hover:border-marscode',
+          dark: 'dark:hover:border-marscode/30 dark:group-hover:text-marscode dark:group-hover:border-marscode/30',
+        }
+      case 'cline':
+        return {
+          hover: 'hover:border-cline hover:shadow-cline',
+          groupHover: 'group-hover:text-cline group-hover:border-cline',
+          dark: 'dark:hover:border-cline/30 dark:group-hover:text-cline dark:group-hover:border-cline/30',
+        }
       default:
         return {
           hover: 'hover:border-gray-200 hover:shadow-lg',
@@ -58,6 +77,24 @@ export function ToolCard({ tool }: ToolCardProps) {
   }
 
   const getLogo = () => {
+    if (
+      (tool.name.toLowerCase() === 'monica' ||
+        tool.name.toLowerCase() === 'cline' ||
+        tool.name.toLowerCase() === 'marscode') &&
+      tool.logo
+    ) {
+      return (
+        <Image
+          src={tool.logo}
+          alt={tool.name}
+          width={64}
+          height={64}
+          className='object-contain'
+          priority
+        />
+      )
+    }
+
     switch (tool.name.toLowerCase()) {
       case 'cursor':
         return <Cursor size={64} />
@@ -98,7 +135,7 @@ export function ToolCard({ tool }: ToolCardProps) {
     >
       <div className='flex items-start gap-4'>
         <div
-          className={`relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-lg border border-gray-100 bg-white p-2 transition-colors ${styles.groupHover} ${styles.dark} dark:border-white/10 dark:bg-gray-900`}
+          className={`relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-lg border border-gray-100 bg-white transition-colors ${styles.groupHover} ${styles.dark} dark:border-white/10 dark:bg-gray-900`}
         >
           {getLogo()}
         </div>

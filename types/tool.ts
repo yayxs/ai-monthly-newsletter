@@ -1,4 +1,4 @@
-export type ToolCategory = 'llm' | 'code-editor' | 'search-engine'
+export type ToolCategory = 'llm' | 'code-editor' | 'search-engine' | 'ai-assistant'
 
 export interface Tool {
   id: number

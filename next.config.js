@@ -15,6 +15,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'raw.githubusercontent.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'assets.monica.im',
+      },
     ],
   },
   compress: true,

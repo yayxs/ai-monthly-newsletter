@@ -9,7 +9,6 @@ export const tools: Tool[] = [
     company: 'Anysphere',
     companyLink: 'https://anysphere.inc',
     isDomestic: false,
-    logo: 'https://www.cursor.com/assets/videos/logo/placeholder-logo.webp',
     description: {
       en: 'The AI Code Editor',
       zh: 'AI代码编辑器',
@@ -41,7 +40,6 @@ export const tools: Tool[] = [
     company: 'Perplexity AI',
     companyLink: 'https://www.perplexity.ai/about',
     isDomestic: false,
-    logo: 'https://raw.githubusercontent.com/lobehub/lobe-icons/master/icons/perplexity.webp',
     description: {
       en: 'AI Search Engine',
       zh: 'AI搜索引擎',
@@ -73,7 +71,6 @@ export const tools: Tool[] = [
     company: '杭州深度求索人工智能基础技术研究有限公司',
     companyLink: 'https://deepseek.com/about',
     isDomestic: true,
-    logo: 'https://raw.githubusercontent.com/lobehub/lobe-icons/master/icons/deepseek.webp',
     description: {
       en: 'Large Language Model',
       zh: '大语言模型',
@@ -97,5 +94,100 @@ export const tools: Tool[] = [
       },
     },
     releaseDate: '2023-11-02',
+  },
+  {
+    id: 4,
+    name: 'Monica',
+    officialWebsiteLink: 'https://monica.im/',
+    company: '北京红色蝴蝶科技有限公司',
+    isDomestic: true,
+    logo: '/images/monica.png',
+    description: {
+      en: 'All-in-one AI assistant. Personalized, fast and free.',
+      zh: '一站式 AI 助手，个性化、快速且免费。',
+    },
+    category: {
+      key: 'ai-assistant',
+      name: {
+        en: 'AI Assistant',
+        zh: 'AI 助手',
+      },
+    },
+    companyInfo: {
+      foundedDate: '2023-07-03',
+      location: {
+        en: 'Beijing, China',
+        zh: '中国北京',
+      },
+      type: {
+        en: 'Tech Company',
+        zh: '科技公司',
+      },
+    },
+    releaseDate: '2023-07-03',
+  },
+  {
+    id: 5,
+    name: 'MarsCode',
+    officialWebsiteLink: 'https://www.marscode.com/',
+    company: '北京引力弹弓科技有限公司',
+    isDomestic: true,
+    description: {
+      en: 'AI-first IDE that offers all-in-one development capabilities with built-in AI programming assistant.',
+      zh: '内置 AI 编程助手的一体化开发环境，提供代码补全、生成、解释和调试等功能。',
+    },
+    logo: '/images/marscode.png',
+    category: {
+      key: 'code-editor',
+      name: {
+        en: 'AI Code Editor',
+        zh: 'AI代码编辑器',
+      },
+    },
+    companyInfo: {
+      foundedDate: '2024-03-26',
+      location: {
+        en: 'Beijing, China',
+        zh: '中国北京',
+      },
+      type: {
+        en: 'Tech Company',
+        zh: '科技公司',
+      },
+    },
+    releaseDate: '2023-01-01',
+  },
+  {
+    id: 6,
+    name: 'Cline',
+    officialWebsiteLink:
+      'https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev',
+    company: 'Cline Bot Inc.',
+    companyLink: 'https://cline.bot',
+    logo: '/images/Cline.png',
+    isDomestic: false,
+    description: {
+      en: 'Autonomous coding agent right in your IDE, capable of creating/editing files, executing commands, using the browser, and more with your permission every step of the way.',
+      zh: '一款强大的 IDE 自主编码助手，能够在您的许可下创建/编辑文件、执行命令、使用浏览器等。',
+    },
+    category: {
+      key: 'code-editor',
+      name: {
+        en: 'AI Code Editor',
+        zh: 'AI代码编辑器',
+      },
+    },
+    companyInfo: {
+      foundedDate: '2024-01-01',
+      location: {
+        en: 'San Francisco, USA',
+        zh: '美国旧金山',
+      },
+      type: {
+        en: 'Tech Company',
+        zh: '科技公司',
+      },
+    },
+    releaseDate: '2024-01-01',
   },
 ]
