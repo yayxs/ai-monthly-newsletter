@@ -68,11 +68,11 @@ export default function ContactPage() {
               <div className='space-y-4'>
                 <div className='flex items-center gap-2'>
                   <EnvelopeIcon className='h-5 w-5' />
-                  <span>Email: contact@example.com</span>
+                  <span>Email: yangwanlia@gmail.com</span>
                 </div>
                 <div className='flex items-center gap-2'>
                   <ChatBubbleLeftIcon className='h-5 w-5' />
-                  <span>WeChat: your_wechat_id</span>
+                  <span>WeChat: xxxx</span>
                 </div>
               </div>
             </div>

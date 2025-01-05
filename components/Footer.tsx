@@ -7,17 +7,37 @@ import { useEffect, useState } from 'react'
 export function Footer() {
   const { language } = useLanguageContext()
   const [totalViews, setTotalViews] = useState<number>(0)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    // 获取总访问量
-    fetch('/api/analytics')
-      .then((res) => res.json())
-      .then((data) => {
-        setTotalViews(data.total_views)
-      })
-      .catch((error) => {
+    const fetchViews = async (retryCount = 0) => {
+      try {
+        setLoading(true)
+        setError(null)
+        const response = await fetch('/api/analytics')
+        if (!response.ok) {
+          throw new Error('Failed to fetch analytics')
+        }
+        const data = await response.json()
+        if (typeof data.total_views === 'number') {
+          setTotalViews(data.total_views)
+        } else {
+          console.warn('Unexpected analytics data format:', data)
+        }
+      } catch (error) {
         console.error('Error fetching analytics:', error)
-      })
+        setError(error instanceof Error ? error.message : 'Unknown error')
+        // 如果失败且重试次数小于3，则5秒后重试
+        if (retryCount < 3) {
+          setTimeout(() => fetchViews(retryCount + 1), 5000)
+        }
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchViews()
   }, [])
 
   const formatDate = (date: string) => {
@@ -56,7 +76,13 @@ export function Footer() {
           <Link href='/admin' className='hover:text-gray-900 dark:hover:text-gray-100'>
             <span>
               {language === 'zh' ? '访问量 ' : 'Views: '}
-              {totalViews.toLocaleString()}
+              {loading ? (
+                <span className='animate-pulse'>...</span>
+              ) : error ? (
+                <span title={error}>-</span>
+              ) : (
+                totalViews.toLocaleString()
+              )}
             </span>
           </Link>
         </div>

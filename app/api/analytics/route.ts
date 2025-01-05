@@ -19,6 +19,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: true })
     }
 
+    console.log('Recording page view:', { path, ip, userAgent, referer })
+
     // 记录页面访问
     const { data: pageView, error: pageViewError } = await supabase
       .from('page_views')
@@ -31,7 +33,10 @@ export async function POST(request: NextRequest) {
       .select()
       .single()
 
-    if (pageViewError) throw pageViewError
+    if (pageViewError) {
+      console.error('Error recording page view:', pageViewError)
+      throw pageViewError
+    }
 
     // 更新每日统计
     const today = new Date().toISOString().split('T')[0]
@@ -40,50 +45,86 @@ export async function POST(request: NextRequest) {
       visitor_ip: ip,
     })
 
-    if (statsError) throw statsError
+    if (statsError) {
+      console.error('Error updating daily stats:', statsError)
+      throw statsError
+    }
 
     return NextResponse.json({ success: true, pageView })
   } catch (error) {
     console.error('Error recording analytics:', error)
-    return NextResponse.json({ error: 'Failed to record analytics' }, { status: 500 })
+    return NextResponse.json(
+      {
+        error: 'Failed to record analytics',
+        details: error instanceof Error ? error.message : error,
+      },
+      { status: 500 }
+    )
   }
 }
 
 export async function GET() {
   try {
+    console.log('Fetching analytics data')
+
     const today = new Date().toISOString().split('T')[0]
     const thirtyDaysAgo = new Date()
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
     const thirtyDaysAgoStr = thirtyDaysAgo.toISOString().split('T')[0]
 
     // 获取总访问量（排除管理页面）
-    const { count: totalViews } = await supabase
+    const { count: totalViews, error: countError } = await supabase
       .from('page_views')
       .select('*', { count: 'exact', head: true })
       .not('page_path', 'in', `(${EXCLUDED_PATHS.join(',')})`)
 
+    if (countError) {
+      console.error('Error fetching total views:', countError)
+      throw countError
+    }
+
     // 获取今日统计（排除管理页面）
-    const { data: todayData } = await supabase
+    const { data: todayData, error: todayError } = await supabase
       .from('daily_stats')
       .select('total_views, unique_visitors')
       .eq('date', today)
       .single()
 
+    if (todayError && todayError.code !== 'PGRST116') {
+      console.error('Error fetching today stats:', todayError)
+      throw todayError
+    }
+
     // 获取最近30天的统计数据（排除管理页面）
-    const { data: dailyStats } = await supabase
+    const { data: dailyStats, error: statsError } = await supabase
       .from('daily_stats')
       .select('*')
       .gte('date', thirtyDaysAgoStr)
       .lte('date', today)
       .order('date', { ascending: true })
 
-    return NextResponse.json({
+    if (statsError) {
+      console.error('Error fetching daily stats:', statsError)
+      throw statsError
+    }
+
+    const response = {
       total_views: totalViews || 0,
       today_views: todayData?.total_views || 0,
       daily_stats: dailyStats || [],
-    })
+    }
+
+    console.log('Analytics data:', response)
+
+    return NextResponse.json(response)
   } catch (error) {
     console.error('Error fetching analytics:', error)
-    return NextResponse.json({ error: 'Failed to fetch analytics' }, { status: 500 })
+    return NextResponse.json(
+      {
+        error: 'Failed to fetch analytics',
+        details: error instanceof Error ? error.message : error,
+      },
+      { status: 500 }
+    )
   }
 }
