@@ -1,5 +1,6 @@
 'use client'
 
+import { Advertisement } from '@/components/Advertisement'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 import { ToolCard } from '@/components/ToolCard'
@@ -40,6 +41,19 @@ export default function Home() {
       return 0
     })
 
+  // 将工具列表分组，每6个一组，用于在工具卡片之间插入广告
+  const groupedTools = filteredTools.reduce(
+    (acc, tool, index) => {
+      const groupIndex = Math.floor(index / 6)
+      if (!acc[groupIndex]) {
+        acc[groupIndex] = []
+      }
+      acc[groupIndex].push(tool)
+      return acc
+    },
+    [] as (typeof filteredTools)[]
+  )
+
   return (
     <>
       <Header />
@@ -54,10 +68,20 @@ export default function Home() {
           onDomesticChange={setShowDomesticOnly}
         />
         <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
-          {filteredTools.map((tool) => (
-            <ToolCard key={tool.id} tool={tool} />
+          {groupedTools.map((group, groupIndex) => (
+            <>
+              {group.map((tool) => (
+                <ToolCard key={tool.id} tool={tool} />
+              ))}
+              {/* 每6个工具后添加一个广告位 */}
+              {groupIndex < groupedTools.length - 1 && (
+                <Advertisement position='card' className='col-span-full lg:col-span-3' />
+              )}
+            </>
           ))}
         </div>
+        {/* 底部广告位 */}
+        <Advertisement position='footer' className='mt-8' />
       </main>
       <Footer />
     </>
