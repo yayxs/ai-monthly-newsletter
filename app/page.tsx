@@ -4,7 +4,6 @@ import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 import { ToolCard } from '@/components/ToolCard'
 import { ToolFilter } from '@/components/ToolFilter'
-import { ExternalLinks } from '@/components/ExternalLinks'
 import { tools } from '@/data/tools'
 import { Tool, ToolCategory } from '@/types/tool'
 import { useEffect, useState } from 'react'
@@ -105,7 +104,6 @@ export default function Home() {
           ))}
         </div>
       </main>
-      <ExternalLinks />
       <Footer />
     </>
   )
