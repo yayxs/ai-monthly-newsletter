@@ -1,10 +1,10 @@
 'use client'
 
-import { Advertisement } from '@/components/Advertisement'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 import { ToolCard } from '@/components/ToolCard'
 import { ToolFilter } from '@/components/ToolFilter'
+import { ExternalLinks } from '@/components/ExternalLinks'
 import { tools } from '@/data/tools'
 import { Tool, ToolCategory } from '@/types/tool'
 import { useEffect, useState } from 'react'
@@ -24,6 +24,7 @@ export default function Home() {
   const [sortBy, setSortBy] = useState<'releaseDate' | 'companyFoundedDate' | null>(null)
   const [showDomesticOnly, setShowDomesticOnly] = useState<boolean | null>(null)
   const [shuffledTools, setShuffledTools] = useState<Tool[]>([])
+  const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(() => {
     // 初始化时随机排序工具列表
@@ -33,6 +34,19 @@ export default function Home() {
   }, [])
 
   const filteredTools = shuffledTools
+    .filter((tool) => {
+      // 搜索过滤
+      if (searchTerm) {
+        const searchLower = searchTerm.toLowerCase()
+        return (
+          tool.name.toLowerCase().includes(searchLower) ||
+          tool.description.en.toLowerCase().includes(searchLower) ||
+          tool.description.zh.toLowerCase().includes(searchLower) ||
+          tool.company.toLowerCase().includes(searchLower)
+        )
+      }
+      return true
+    })
     .filter((tool) => {
       if (selectedCategory === null) return true
       return tool.category.key === selectedCategory
@@ -69,7 +83,7 @@ export default function Home() {
 
   return (
     <>
-      <Header />
+      <Header onSearch={setSearchTerm} />
       <main className='container mx-auto px-4 py-8'>
         <ToolFilter
           tools={tools}
@@ -87,15 +101,11 @@ export default function Home() {
                 <ToolCard key={tool.id} tool={tool} />
               ))}
               {/* 每6个工具后添加一个广告位 */}
-              {groupIndex < groupedTools.length - 1 && (
-                <Advertisement position='card' className='col-span-full lg:col-span-3' />
-              )}
             </div>
           ))}
         </div>
-        {/* 底部广告位 */}
-        <Advertisement position='footer' className='mt-8' />
       </main>
+      <ExternalLinks />
       <Footer />
     </>
   )

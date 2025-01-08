@@ -7,9 +7,10 @@ import Image from 'next/image'
 
 interface ToolCardProps {
   tool: Tool
+  highlight?: string
 }
 
-export function ToolCard({ tool }: ToolCardProps) {
+export function ToolCard({ tool, highlight }: ToolCardProps) {
   const { language } = useLanguageContext()
 
   const handleCompanyClick = (e: React.MouseEvent) => {
@@ -80,7 +81,8 @@ export function ToolCard({ tool }: ToolCardProps) {
     if (
       (tool.name.toLowerCase() === 'monica' ||
         tool.name.toLowerCase() === 'cline' ||
-        tool.name.toLowerCase() === 'marscode') &&
+        tool.name.toLowerCase() === 'marscode' ||
+        tool.name.toLowerCase() === 'roo cline') &&
       tool.logo
     ) {
       return (
@@ -196,7 +198,7 @@ export function ToolCard({ tool }: ToolCardProps) {
               />
             </svg>
           </div>
-          {tool.companyInfo && (
+          {tool.companyInfo && tool.companyInfo.foundedDate && (
             <div className='mt-2 text-xs text-gray-500 dark:text-gray-400'>
               <span className='inline-flex items-center gap-1'>
                 <svg className='h-3 w-3' fill='currentColor' viewBox='0 0 20 20'>
@@ -205,17 +207,21 @@ export function ToolCard({ tool }: ToolCardProps) {
                 {language === 'zh' ? '成立于 ' : 'Founded '}
                 {formatDate(tool.companyInfo.foundedDate)}
               </span>
-              <span className='mx-2'>·</span>
-              <span className='inline-flex items-center gap-1'>
-                <svg className='h-3 w-3' fill='currentColor' viewBox='0 0 20 20'>
-                  <path
-                    fillRule='evenodd'
-                    d='M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z'
-                    clipRule='evenodd'
-                  />
-                </svg>
-                {tool.companyInfo.location[language]}
-              </span>
+              {tool.companyInfo.location && (
+                <>
+                  <span className='mx-2'>·</span>
+                  <span className='inline-flex items-center gap-1'>
+                    <svg className='h-3 w-3' fill='currentColor' viewBox='0 0 20 20'>
+                      <path
+                        fillRule='evenodd'
+                        d='M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z'
+                        clipRule='evenodd'
+                      />
+                    </svg>
+                    {tool.companyInfo.location[language]}
+                  </span>
+                </>
+              )}
             </div>
           )}
         </div>

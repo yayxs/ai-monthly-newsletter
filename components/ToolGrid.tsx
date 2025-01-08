@@ -16,16 +16,35 @@ function shuffleArray<T>(array: T[]): T[] {
 
 export function ToolGrid() {
   const [shuffledTools, setShuffledTools] = useState(tools)
+  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
     setShuffledTools(shuffleArray(tools))
   }, [])
 
+  const filteredTools = shuffledTools.filter((tool) => {
+    const query = searchQuery.toLowerCase()
+    return (
+      tool.name.toLowerCase().includes(query) ||
+      tool.description.toLowerCase().includes(query) ||
+      tool.tags.some((tag) => tag.toLowerCase().includes(query))
+    )
+  })
+
   return (
-    <div className='grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2'>
-      {shuffledTools.map((tool) => (
-        <ToolCard key={tool.id} tool={tool} />
-      ))}
+    <div className='space-y-4'>
+      <input
+        type='text'
+        placeholder='搜索工具...'
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className='w-full rounded-md border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
+      />
+      <div className='grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2'>
+        {filteredTools.map((tool) => (
+          <ToolCard key={tool.id} tool={tool} highlight={searchQuery} />
+        ))}
+      </div>
     </div>
   )
 }

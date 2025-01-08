@@ -190,4 +190,36 @@ export const tools: Tool[] = [
     },
     releaseDate: '2024-01-01',
   },
+  {
+    id: 7,
+    name: 'Roo Cline',
+    officialWebsiteLink: 'https://github.com/RooVetGit/Roo-Cline',
+    company: 'RooVetGit',
+    companyLink: 'https://github.com/RooVetGit',
+    isDomestic: false,
+    logo: `/images/roo-cline.png`,
+    description: {
+      en: 'A fork of Cline, an autonomous coding agent, with some additional experimental features',
+      zh: 'Cline 的一个分支，一个自主编码代理，具有一些额外的实验功能。',
+    },
+    category: {
+      key: 'ai-assistant',
+      name: {
+        en: 'AI Assistant',
+        zh: 'AI 助手',
+      },
+    },
+    companyInfo: {
+      foundedDate: '',
+      location: {
+        en: '',
+        zh: '',
+      },
+      type: {
+        en: '',
+        zh: '',
+      },
+    },
+    releaseDate: '',
+  },
 ]
