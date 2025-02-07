@@ -1,6 +1,6 @@
 'use client'
 
-import { Language } from 'lib/i18n'
+import { Language } from '@/lib/i18n'
 import { useEffect, useState } from 'react'
 
 // 获取初始语言

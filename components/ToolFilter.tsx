@@ -1,11 +1,10 @@
 'use client'
 
-import { useLanguageContext } from '@/app/LanguageProvider'
 import { Tool, ToolCategory } from '@/types/tool'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon, XMarkIcon } from '@heroicons/react/20/solid'
 import { FunnelIcon } from '@heroicons/react/24/outline'
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 
 interface ToolFilterProps {
   tools: Tool[]
@@ -26,7 +25,11 @@ export function ToolFilter({
   showDomesticOnly,
   onDomesticChange,
 }: ToolFilterProps) {
-  const { language, mounted } = useLanguageContext()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const hasActiveFilters = selectedCategory !== null || sortBy !== null || showDomesticOnly !== null
 
@@ -36,36 +39,27 @@ export function ToolFilter({
     onDomesticChange(null)
   }
 
-  // 获取所有可用的类别
   const categories = Array.from(new Set(tools.map((tool) => tool.category.key)))
 
   const getCategoryName = (category: ToolCategory) => {
     const tool = tools.find((t) => t.category.key === category)
-    return tool?.category.name[language] || category
+    return tool?.category.name || category
   }
 
   const getSortLabel = (sort: string | null) => {
-    if (!mounted) return '加载中...'
     switch (sort) {
       case 'releaseDate':
-        return language === 'zh' ? '按发布时间排序' : 'Sort by Release Date'
+        return '按发布时间排序'
       case 'companyFoundedDate':
-        return language === 'zh' ? '按公司成立时间排序' : 'Sort by Company Founded Date'
+        return '按公司成立时间排序'
       default:
-        return language === 'zh' ? '默认排序' : 'Default Sort'
+        return '默认排序'
     }
   }
 
   const getDomesticLabel = (domestic: boolean | null) => {
-    if (!mounted) return '加载中...'
-    if (domestic === null) return language === 'zh' ? '所有公司' : 'All Companies'
-    return domestic
-      ? language === 'zh'
-        ? '仅国内公司'
-        : 'Domestic Only'
-      : language === 'zh'
-        ? '仅国外公司'
-        : 'Foreign Only'
+    if (domestic === null) return '所有公司'
+    return domestic ? '仅国内公司' : '仅国外公司'
   }
 
   if (!mounted) {
@@ -85,7 +79,7 @@ export function ToolFilter({
       <Menu as='div' className='relative'>
         <Menu.Button className='inline-flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800'>
           <FunnelIcon className='h-4 w-4' />
-          {language === 'zh' ? '类别' : 'Category'}
+          类别
           <ChevronDownIcon className='h-4 w-4' />
         </Menu.Button>
         <Transition
@@ -111,7 +105,7 @@ export function ToolFilter({
                           : ''
                     } flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-700 dark:text-gray-200`}
                   >
-                    {language === 'zh' ? '全部' : 'All'}
+                    全部
                   </button>
                 )}
               </Menu.Item>
@@ -220,10 +214,10 @@ export function ToolFilter({
         <button
           onClick={handleReset}
           className='inline-flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-red-500 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-red-400'
-          title={language === 'zh' ? '重置筛选' : 'Reset Filters'}
+          title='重置筛选'
         >
           <XMarkIcon className='h-4 w-4' />
-          {language === 'zh' ? '重置' : 'Reset'}
+          重置
         </button>
       )}
     </div>

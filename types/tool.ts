@@ -3,32 +3,20 @@ export type ToolCategory = 'llm' | 'code-editor' | 'search-engine' | 'ai-assista
 export interface Tool {
   id: number
   name: string
+  description: string
   officialWebsiteLink: string
   company: string
   companyLink?: string
   isDomestic: boolean
   logo?: string
-  description: {
-    en: string
-    zh: string
-  }
   category: {
     key: ToolCategory
-    name: {
-      en: string
-      zh: string
-    }
+    name: string
   }
   companyInfo?: {
     foundedDate: string
-    location: {
-      en: string
-      zh: string
-    }
-    type: {
-      en: string
-      zh: string
-    }
+    location: string
+    type: string
   }
-  releaseDate?: string
+  releaseDate: string
 }

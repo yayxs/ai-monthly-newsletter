@@ -7,6 +7,12 @@ export const metadata: Metadata = {
   description: 'AI 第一步',
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return <ClientLayout>{children}</ClientLayout>
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang='zh'>
+      <body>
+        <ClientLayout>{children}</ClientLayout>
+      </body>
+    </html>
+  )
 }

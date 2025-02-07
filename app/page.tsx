@@ -21,75 +21,58 @@ function shuffleArray<T>(array: T[]): T[] {
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<ToolCategory | null>(null)
   const [sortBy, setSortBy] = useState<'releaseDate' | 'companyFoundedDate' | null>(null)
+  const [searchTerm, setSearchTerm] = useState('')
   const [showDomesticOnly, setShowDomesticOnly] = useState<boolean | null>(null)
   const [shuffledTools, setShuffledTools] = useState<Tool[]>([])
-  const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(() => {
-    // 初始化时随机排序工具列表
     setShuffledTools(shuffleArray(tools))
-    // 记录页面访问
-    fetch('/api/analytics?path=/', { method: 'POST' }).catch(console.error)
   }, [])
 
-  const filteredTools = shuffledTools
-    .filter((tool) => {
-      // 搜索过滤
-      if (searchTerm) {
-        const searchLower = searchTerm.toLowerCase()
-        return (
-          tool.name.toLowerCase().includes(searchLower) ||
-          tool.description.en.toLowerCase().includes(searchLower) ||
-          tool.description.zh.toLowerCase().includes(searchLower) ||
-          tool.company.toLowerCase().includes(searchLower)
-        )
-      }
-      return true
-    })
-    .filter((tool) => {
-      if (selectedCategory === null) return true
-      return tool.category.key === selectedCategory
-    })
-    .filter((tool) => {
-      if (showDomesticOnly === null) return true
-      return tool.isDomestic === showDomesticOnly
-    })
-    .sort((a, b) => {
-      if (sortBy === 'releaseDate') {
-        return new Date(b.releaseDate || '').getTime() - new Date(a.releaseDate || '').getTime()
-      }
-      if (sortBy === 'companyFoundedDate') {
-        return (
-          new Date(b.companyInfo?.foundedDate || '').getTime() -
-          new Date(a.companyInfo?.foundedDate || '').getTime()
-        )
-      }
-      return 0 // 如果没有选择排序方式，保持随机顺序
-    })
+  const filteredTools = shuffledTools.filter((tool) => {
+    const matchesCategory = !selectedCategory || tool.category.key === selectedCategory
+    const matchesSearch =
+      !searchTerm ||
+      tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      tool.description.toLowerCase().includes(searchTerm.toLowerCase())
+    const matchesDomestic = showDomesticOnly === null || tool.isDomestic === showDomesticOnly
 
-  // 将工具列表分组，每6个一组，用于在工具卡片之间插入广告
-  const groupedTools = filteredTools.reduce(
-    (acc, tool, index) => {
-      const groupIndex = Math.floor(index / 6)
-      if (!acc[groupIndex]) {
-        acc[groupIndex] = []
-      }
-      acc[groupIndex].push(tool)
-      return acc
-    },
-    [] as (typeof filteredTools)[]
-  )
+    return matchesCategory && matchesSearch && matchesDomestic
+  })
+
+  const sortedTools = [...filteredTools].sort((a, b) => {
+    if (!sortBy) return 0
+
+    if (sortBy === 'companyFoundedDate') {
+      const dateA = new Date(a.companyInfo?.foundedDate || '').getTime()
+      const dateB = new Date(b.companyInfo?.foundedDate || '').getTime()
+      return dateB - dateA
+    }
+
+    const dateA = new Date(a.releaseDate || '').getTime()
+    const dateB = new Date(b.releaseDate || '').getTime()
+    return dateB - dateA
+  })
+
+  const groupedTools = sortedTools.reduce<Tool[][]>((acc, tool, index) => {
+    const groupIndex = Math.floor(index / 6)
+    if (!acc[groupIndex]) {
+      acc[groupIndex] = []
+    }
+    acc[groupIndex].push(tool)
+    return acc
+  }, [])
 
   return (
     <>
       <Header onSearch={setSearchTerm} />
-      <main className='container mx-auto px-4 py-8'>
+      <main className='container mx-auto min-h-[calc(100vh-200px)] px-4 py-8'>
         <ToolFilter
           tools={tools}
           selectedCategory={selectedCategory}
           onCategoryChange={setSelectedCategory}
           sortBy={sortBy}
-          onSortChange={setSortBy}
+          onSortChange={(sort) => setSortBy(sort)}
           showDomesticOnly={showDomesticOnly}
           onDomesticChange={setShowDomesticOnly}
         />
@@ -99,7 +82,6 @@ export default function Home() {
               {group.map((tool) => (
                 <ToolCard key={tool.id} tool={tool} />
               ))}
-              {/* 每6个工具后添加一个广告位 */}
             </div>
           ))}
         </div>

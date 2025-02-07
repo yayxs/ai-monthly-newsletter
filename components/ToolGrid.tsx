@@ -27,7 +27,7 @@ export function ToolGrid() {
     return (
       tool.name.toLowerCase().includes(query) ||
       tool.description.toLowerCase().includes(query) ||
-      tool.tags.some((tag) => tag.toLowerCase().includes(query))
+      tool.company.toLowerCase().includes(query)
     )
   })
 
@@ -42,7 +42,7 @@ export function ToolGrid() {
       />
       <div className='grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2'>
         {filteredTools.map((tool) => (
-          <ToolCard key={tool.id} tool={tool} highlight={searchQuery} />
+          <ToolCard key={tool.id} tool={tool} />
         ))}
       </div>
     </div>
