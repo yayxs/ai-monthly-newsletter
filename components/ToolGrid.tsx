@@ -24,18 +24,14 @@ export function ToolGrid() {
 
   const filteredTools = shuffledTools.filter((tool) => {
     const query = searchQuery.toLowerCase()
-    return (
-      tool.name.toLowerCase().includes(query) ||
-      tool.description.toLowerCase().includes(query) ||
-      tool.company.toLowerCase().includes(query)
-    )
+    return tool.name.toLowerCase().includes(query)
   })
 
   return (
     <div className='space-y-4'>
       <input
         type='text'
-        placeholder='搜索工具...'
+        placeholder='Search tools...'
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         className='w-full rounded-md border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'

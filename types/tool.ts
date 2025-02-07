@@ -1,22 +1,11 @@
-export type ToolCategory = 'llm' | 'code-editor' | 'search-engine' | 'ai-assistant'
+export type ToolCategory = 'Chat'
 
 export interface Tool {
   id: number
   name: string
-  description: string
-  officialWebsiteLink: string
-  company: string
-  companyLink?: string
-  isDomestic: boolean
-  logo?: string
+  linkUrl: string
   category: {
     key: ToolCategory
     name: string
   }
-  companyInfo?: {
-    foundedDate: string
-    location: string
-    type: string
-  }
-  releaseDate: string
 }

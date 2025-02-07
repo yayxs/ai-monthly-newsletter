@@ -1,141 +1,77 @@
 import { Tool } from '@/types/tool'
 
 export const tools: Tool[] = [
+  // {
+  //   id: 1,
+  //   name: 'Cursor',
+  //   // cursor 的网址是 https://www.cursor.com/
+  //   linkUrl: 'https://www.cursor.com/',
+  //   category: {
+  //     key: 'code-editor',
+  //     name: 'AI代码编辑器',
+  //   },
+  // },
+  // {
+  //   id: 2,
+  //   name: 'Perplexity',
+  //   linkUrl: 'https://www.perplexity.ai/',
+  //   category: {
+  //     key: 'search-engine',
+  //     name: 'AI搜索引擎',
+  //   },
+  // },
+  // {
+  //   id: 3,
+  //   name: 'DeepSeek',
+  //   linkUrl: 'https://deepseek.com/',
+  //   category: {
+  //     key: 'llm',
+  //     name: '大语言模型',
+  //   },
+  // },
+  // {
+  //   id: 4,
+  //   name: 'Monica',
+  //   linkUrl: 'https://monica.im/',
+  //   category: {
+  //     key: 'ai-assistant',
+  //     name: 'AI 助手',
+  //   },
+  // },
+  // {
+  //   id: 5,
+  //   name: 'MarsCode',
+  //   linkUrl: 'https://www.marscode.com/',
+  //   category: {
+  //     key: 'code-editor',
+  //     name: 'AI代码编辑器',
+  //   },
+  // },
+  // {
+  //   id: 6,
+  //   name: 'Cline',
+  //   linkUrl: 'https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev',
+  //   category: {
+  //     key: 'code-editor',
+  //     name: 'AI代码编辑器',
+  //   },
+  // },
+  // {
+  //   id: 7,
+  //   name: 'Roo Cline',
+  //   linkUrl: 'https://github.com/RooVetGit/Roo-Cline',
+  //   category: {
+  //     key: 'ai-assistant',
+  //     name: 'AI 助手',
+  //   },
+  // },
   {
-    id: 1,
-    name: 'Cursor',
-    // cursor 的网址是 https://www.cursor.com/
-    officialWebsiteLink: 'https://www.cursor.com/',
-    company: 'Anysphere',
-    companyLink: 'https://anysphere.inc',
-    isDomestic: false,
-    description: '中文描述',
+    id: 8,
+    name: 'Deepseek Chat',
+    linkUrl: 'https://chat.deepseek.com/',
     category: {
-      key: 'code-editor',
-      name: 'AI代码编辑器',
+      key: 'Chat',
+      name: 'Chat',
     },
-    companyInfo: {
-      foundedDate: '2022-01-06',
-      location: '美国纽约州布法罗',
-      type: '科技初创公司',
-    },
-    releaseDate: '2023-01-05',
-  },
-  {
-    id: 2,
-    name: 'Perplexity',
-    officialWebsiteLink: 'https://www.perplexity.ai/',
-    company: 'Perplexity AI',
-    companyLink: 'https://www.perplexity.ai/about',
-    isDomestic: false,
-    description: '中文描述',
-    category: {
-      key: 'search-engine',
-      name: 'AI搜索引擎',
-    },
-    companyInfo: {
-      foundedDate: '2022-08-03',
-      location: '美国旧金山',
-      type: '科技初创公司',
-    },
-    releaseDate: '2022-12-07',
-  },
-  {
-    id: 3,
-    name: 'DeepSeek',
-    officialWebsiteLink: 'https://deepseek.com/',
-    company: '杭州深度求索人工智能基础技术研究有限公司',
-    companyLink: 'https://deepseek.com/about',
-    isDomestic: true,
-    description: '中文描述',
-    category: {
-      key: 'llm',
-      name: '大语言模型',
-    },
-    companyInfo: {
-      foundedDate: '2023-07-17',
-      location: '中国杭州',
-      type: '人工智能研究公司',
-    },
-    releaseDate: '2023-11-02',
-  },
-  {
-    id: 4,
-    name: 'Monica',
-    officialWebsiteLink: 'https://monica.im/',
-    company: '北京红色蝴蝶科技有限公司',
-    isDomestic: true,
-    logo: '/images/monica.png',
-    description: '中文描述',
-    category: {
-      key: 'ai-assistant',
-      name: 'AI 助手',
-    },
-    companyInfo: {
-      foundedDate: '2023-07-03',
-      location: '中国北京',
-      type: '科技公司',
-    },
-    releaseDate: '2023-07-03',
-  },
-  {
-    id: 5,
-    name: 'MarsCode',
-    officialWebsiteLink: 'https://www.marscode.com/',
-    company: '北京引力弹弓科技有限公司',
-    isDomestic: true,
-    description: '中文描述',
-    logo: '/images/marscode.png',
-    category: {
-      key: 'code-editor',
-      name: 'AI代码编辑器',
-    },
-    companyInfo: {
-      foundedDate: '2024-03-26',
-      location: '中国北京',
-      type: '科技公司',
-    },
-    releaseDate: '2023-01-01',
-  },
-  {
-    id: 6,
-    name: 'Cline',
-    officialWebsiteLink:
-      'https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev',
-    company: 'Cline Bot Inc.',
-    companyLink: 'https://cline.bot',
-    logo: '/images/Cline.png',
-    isDomestic: false,
-    description: '中文描述',
-    category: {
-      key: 'code-editor',
-      name: 'AI代码编辑器',
-    },
-    companyInfo: {
-      foundedDate: '2024-01-01',
-      location: '美国旧金山',
-      type: '科技公司',
-    },
-    releaseDate: '2024-01-01',
-  },
-  {
-    id: 7,
-    name: 'Roo Cline',
-    officialWebsiteLink: 'https://github.com/RooVetGit/Roo-Cline',
-    company: 'RooVetGit',
-    companyLink: 'https://github.com/RooVetGit',
-    isDomestic: false,
-    logo: `/images/roo-cline.png`,
-    description: '中文描述',
-    category: {
-      key: 'ai-assistant',
-      name: 'AI 助手',
-    },
-    companyInfo: {
-      foundedDate: '',
-      location: '',
-      type: '',
-    },
-    releaseDate: '',
   },
 ]
