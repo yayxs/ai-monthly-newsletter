@@ -2,9 +2,7 @@ import { Tool } from '@/types/tool'
 
 export const tools: Tool[] = [
   {
-    id: 1,
     name: 'Cursor',
-    // cursor 的网址是 https://www.cursor.com/
     linkUrl: 'https://www.cursor.com/',
     category: {
       key: 'Coding',
@@ -12,7 +10,6 @@ export const tools: Tool[] = [
     },
   },
   {
-    id: 2,
     name: 'Perplexity',
     linkUrl: 'https://www.perplexity.ai/',
     category: {
@@ -21,7 +18,6 @@ export const tools: Tool[] = [
     },
   },
   {
-    id: 3,
     name: 'DeepSeek',
     linkUrl: 'https://deepseek.com/',
     category: {
@@ -30,7 +26,14 @@ export const tools: Tool[] = [
     },
   },
   {
-    id: 4,
+    name: 'DeepSeek',
+    linkUrl: 'https://deepseek.com/',
+    category: {
+      key: 'Company',
+      name: '公司',
+    },
+  },
+  {
     name: 'Monica',
     linkUrl: 'https://monica.im/',
     category: {
@@ -39,7 +42,6 @@ export const tools: Tool[] = [
     },
   },
   {
-    id: 5,
     name: 'MarsCode',
     linkUrl: 'https://www.marscode.com/',
     category: {
@@ -48,7 +50,6 @@ export const tools: Tool[] = [
     },
   },
   {
-    id: 6,
     name: 'Cline',
     linkUrl: 'https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev',
     category: {
@@ -57,7 +58,6 @@ export const tools: Tool[] = [
     },
   },
   {
-    id: 7,
     name: 'Roo Code / Roo Cline',
     linkUrl: 'https://github.com/RooVetGit/Roo-Cline',
     category: {
@@ -66,12 +66,43 @@ export const tools: Tool[] = [
     },
   },
   {
-    id: 8,
     name: 'Deepseek Chat',
     linkUrl: 'https://chat.deepseek.com/',
     category: {
       key: 'Chat',
       name: '聊天',
+    },
+  },
+  {
+    name: 'Kimi Chat',
+    linkUrl: 'https://kimi.moonshot.cn/',
+    category: {
+      key: 'Chat',
+      name: '聊天',
+    },
+  },
+  {
+    name: 'OpenRouter',
+    linkUrl: 'https://openrouter.ai/',
+    category: {
+      key: 'API',
+      name: 'API',
+    },
+  },
+  {
+    name: 'Devv_',
+    linkUrl: 'https://devv.ai/',
+    category: {
+      key: 'Search',
+      name: '搜索',
+    },
+  },
+  {
+    name: '纳米',
+    linkUrl: 'https://www.n.cn/',
+    category: {
+      key: 'Search',
+      name: '搜索',
     },
   },
 ]

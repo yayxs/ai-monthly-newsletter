@@ -10,14 +10,18 @@ interface ClientLayoutProps {
 
 export function ClientLayout({ children }: ClientLayoutProps) {
   const pathname = usePathname()
-  const showSidebar = pathname === '/' // 只在首页显示侧边栏
+  const showSidebar = pathname === '/'
 
   return (
     <div className='min-h-screen bg-gray-50'>
       <Header onSearch={pathname === '/' ? () => {} : undefined} />
       <div className='relative'>
         {showSidebar && <Sidebar />}
-        <div className={`${showSidebar ? 'pl-64' : ''} transition-all duration-200`}>
+        <div
+          className={`${
+            showSidebar ? 'pl-64' : ''
+          } min-h-[calc(100vh-64px)] transition-all duration-200`}
+        >
           {children}
         </div>
       </div>

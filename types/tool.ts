@@ -1,11 +1,10 @@
-export type ToolCategory = 'Chat' | 'Coding' | 'Search' | 'Extension' | 'LLM'
+export type ToolCategory = 'Chat' | 'Search' | 'LLM' | 'Coding' | 'Extension' | 'Company' | 'API'
 
 export interface Tool {
-  id: number
   name: string
   linkUrl: string
   category: {
-    key: ToolCategory
+    key: string
     name: string
   }
 }
