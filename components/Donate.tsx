@@ -1,13 +1,11 @@
 'use client'
 
-import { useLanguageContext } from '@/app/LanguageProvider'
 import { Dialog, Transition } from '@headlessui/react'
 import { HeartIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import { Fragment, useState } from 'react'
 
 export function Donate() {
-  const { language } = useLanguageContext()
   const [isOpen, setIsOpen] = useState(false)
   const [paymentMethod, setPaymentMethod] = useState<'wechat' | 'alipay'>('wechat')
 
@@ -15,10 +13,10 @@ export function Donate() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className='flex items-center gap-1 text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100'
+        className='flex items-center gap-1 text-sm text-gray-500 hover:text-gray-900'
       >
         <HeartIcon className='h-4 w-4' />
-        <span>{language === 'zh' ? '打赏' : 'Donate'}</span>
+        <span>打赏</span>
       </button>
 
       <Transition appear show={isOpen} as={Fragment}>
@@ -46,12 +44,9 @@ export function Donate() {
                 leaveFrom='opacity-100 scale-100'
                 leaveTo='opacity-0 scale-95'
               >
-                <Dialog.Panel className='w-[360px] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-gray-800'>
-                  <Dialog.Title
-                    as='h3'
-                    className='text-center text-lg font-medium text-gray-900 dark:text-gray-100'
-                  >
-                    {language === 'zh' ? '感谢支持' : 'Thank You for Your Support'}
+                <Dialog.Panel className='w-[360px] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
+                  <Dialog.Title as='h3' className='text-center text-lg font-medium text-gray-900'>
+                    感谢支持
                   </Dialog.Title>
 
                   <div className='mt-6 flex justify-center gap-4'>
@@ -59,27 +54,21 @@ export function Donate() {
                       className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                         paymentMethod === 'wechat'
                           ? 'bg-green-500 text-white'
-                          : 'text-green-500 hover:bg-green-50 dark:hover:bg-green-900/10'
+                          : 'text-green-500 hover:bg-green-50'
                       }`}
                       onClick={() => setPaymentMethod('wechat')}
-                      onMouseEnter={() => setPaymentMethod('wechat')}
                     >
-                      <span className='flex items-center gap-2'>
-                        {language === 'zh' ? '微信支付' : 'WeChat Pay'}
-                      </span>
+                      微信支付
                     </button>
                     <button
                       className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                         paymentMethod === 'alipay'
                           ? 'bg-blue-500 text-white'
-                          : 'text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/10'
+                          : 'text-blue-500 hover:bg-blue-50'
                       }`}
                       onClick={() => setPaymentMethod('alipay')}
-                      onMouseEnter={() => setPaymentMethod('alipay')}
                     >
-                      <span className='flex items-center gap-2'>
-                        {language === 'zh' ? '支付宝' : 'Alipay'}
-                      </span>
+                      支付宝
                     </button>
                   </div>
 
@@ -100,9 +89,7 @@ export function Donate() {
                   </div>
 
                   <div className='mt-4'>
-                    <p className='text-center text-sm text-gray-500 dark:text-gray-400'>
-                      {language === 'zh' ? '感谢您的支持！' : 'Thank you for your support!'}
-                    </p>
+                    <p className='text-center text-sm text-gray-500'>感谢您的支持！</p>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

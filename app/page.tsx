@@ -1,5 +1,6 @@
 'use client'
 
+import { Donate } from '@/components/Donate'
 import { ToolCard } from '@/components/ToolCard'
 import { CATEGORY_ORDER } from '@/constants/categories'
 import { tools } from '@/data/tools'
@@ -81,6 +82,9 @@ export default function Home() {
           </div>
         )}
       </main>
+      <div className='fixed bottom-6 right-6 z-50'>
+        <Donate />
+      </div>
     </div>
   )
 }

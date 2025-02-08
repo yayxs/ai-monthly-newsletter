@@ -37,8 +37,8 @@ export function ToolGrid() {
         className='w-full rounded-md border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
       />
       <div className='grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2'>
-        {filteredTools.map((tool) => (
-          <ToolCard key={tool.id} tool={tool} />
+        {filteredTools.map((tool, idx) => (
+          <ToolCard key={`${tool.name}-${idx}`} tool={tool} />
         ))}
       </div>
     </div>
