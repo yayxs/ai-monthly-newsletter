@@ -45,7 +45,7 @@ export function Sidebar() {
   }))
 
   return (
-    <aside className='sidebar-scrollbar fixed top-16 h-[calc(100vh-64px)] w-64 overflow-y-auto border-r border-gray-200 bg-white'>
+    <aside className='sidebar-scrollbar hidden h-[calc(100vh-64px)] w-64 overflow-y-auto border-r border-gray-200 bg-white md:fixed md:top-16 lg:block'>
       <nav className='flex flex-col p-4'>
         {menuItems.map((item) => (
           <button

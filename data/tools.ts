@@ -105,4 +105,12 @@ export const tools: Tool[] = [
       name: '搜索',
     },
   },
+  {
+    name: 'Devin',
+    linkUrl: 'https://devin.ai/',
+    category: {
+      key: 'Coding',
+      name: '编码',
+    },
+  },
 ]
