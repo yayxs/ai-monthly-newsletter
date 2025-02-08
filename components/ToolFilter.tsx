@@ -49,17 +49,17 @@ export function ToolFilter({
   const getSortLabel = (sort: string | null) => {
     switch (sort) {
       case 'releaseDate':
-        return '按发布时间排序'
+        return 'Sort by Release Date'
       case 'companyFoundedDate':
-        return '按公司成立时间排序'
+        return 'Sort by Company Founded Date'
       default:
-        return '默认排序'
+        return 'Default Sort'
     }
   }
 
   const getDomesticLabel = (domestic: boolean | null) => {
-    if (domestic === null) return '所有公司'
-    return domestic ? '仅国内公司' : '仅国外公司'
+    if (domestic === null) return 'All Companies'
+    return domestic ? 'Domestic Companies Only' : 'Foreign Companies Only'
   }
 
   if (!mounted) {
@@ -67,7 +67,7 @@ export function ToolFilter({
       <div className='mb-6 flex flex-wrap items-center gap-4'>
         <div className='inline-flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 dark:border-gray-700 dark:text-gray-200'>
           <FunnelIcon className='h-4 w-4' />
-          类别
+          Category
           <ChevronDownIcon className='h-4 w-4' />
         </div>
       </div>
@@ -79,7 +79,7 @@ export function ToolFilter({
       <Menu as='div' className='relative'>
         <Menu.Button className='inline-flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800'>
           <FunnelIcon className='h-4 w-4' />
-          类别
+          Category
           <ChevronDownIcon className='h-4 w-4' />
         </Menu.Button>
         <Transition
@@ -105,7 +105,7 @@ export function ToolFilter({
                           : ''
                     } flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-700 dark:text-gray-200`}
                   >
-                    全部
+                    All
                   </button>
                 )}
               </Menu.Item>
@@ -213,11 +213,11 @@ export function ToolFilter({
       {hasActiveFilters && (
         <button
           onClick={handleReset}
-          className='inline-flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-red-500 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-red-400'
-          title='重置筛选'
+          className='inline-flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-red-500'
+          title='Reset Filters'
         >
           <XMarkIcon className='h-4 w-4' />
-          重置
+          Reset
         </button>
       )}
     </div>

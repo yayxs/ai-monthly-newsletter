@@ -1,4 +1,4 @@
-export type ToolCategory = 'Chat'
+export type ToolCategory = 'Chat' | 'Coding' | 'Search' | 'Extension' | 'LLM'
 
 export interface Tool {
   id: number

@@ -1,12 +1,10 @@
 'use client'
 
-import { Footer } from '@/components/Footer'
-import { Header } from '@/components/Header'
-import { Sidebar } from '@/components/Sidebar'
 import { ToolCard } from '@/components/ToolCard'
 import { tools } from '@/data/tools'
 import { Tool } from '@/types/tool'
-import { useState } from 'react'
+import debounce from 'lodash/debounce'
+import { useCallback, useState } from 'react'
 
 // Fisher-Yates 洗牌算法
 function shuffleArray<T>(array: T[]): T[] {
@@ -22,37 +20,55 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState('')
   const categories = Array.from(new Set(tools.map((tool) => tool.category.key)))
 
+  // 使用防抖处理搜索
+  const debouncedSearch = useCallback(
+    debounce((value: string) => {
+      setSearchTerm(value)
+    }, 300),
+    []
+  )
+
   const filteredTools = tools.filter((tool) => {
     const matchesSearch = !searchTerm || tool.name.toLowerCase().includes(searchTerm.toLowerCase())
     return matchesSearch
   })
 
-  // 按类别分组工具
+  // 按类别分组工具并过滤掉空类别
   const groupedByCategory = categories.reduce<Record<string, Tool[]>>((acc, category) => {
-    acc[category] = filteredTools.filter((tool) => tool.category.key === category)
+    const categoryTools = filteredTools.filter((tool) => tool.category.key === category)
+    if (categoryTools.length > 0) {
+      acc[category] = categoryTools
+    }
     return acc
   }, {})
 
+  // 获取有工具的类别列表
+  const categoriesWithTools = Object.keys(groupedByCategory)
+
   return (
-    <>
-      <Header onSearch={setSearchTerm} />
-      <div className='container mx-auto flex min-h-[calc(100vh-200px)] px-4 py-8'>
-        <Sidebar />
-        <main className='flex-1 pl-8'>
-          <div id='all' className='mb-8'></div>
-          {categories.map((category) => (
-            <div key={category} id={category.toLowerCase()} className='mb-12'>
-              <h2 className='mb-6 text-2xl font-bold text-gray-900'>{category}</h2>
-              <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
-                {groupedByCategory[category].map((tool) => (
-                  <ToolCard key={tool.id} tool={tool} />
-                ))}
-              </div>
+    <div className='container mx-auto px-4 py-8'>
+      <main>
+        <div id='all' className='mb-8'></div>
+        {categoriesWithTools.map((category) => (
+          <div key={category} id={category.toLowerCase()} className='mb-12'>
+            <h2 className='mb-6 text-2xl font-bold text-gray-900'>{category}</h2>
+            <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
+              {groupedByCategory[category].map((tool) => (
+                <ToolCard key={tool.id} tool={tool} />
+              ))}
+              {/* 添加占位元素保持网格结构稳定 */}
+              {Array.from({ length: 3 - (groupedByCategory[category].length % 3) }).map((_, i) => (
+                <div key={`placeholder-${i}`} className='hidden lg:block' />
+              ))}
             </div>
-          ))}
-        </main>
-      </div>
-      <Footer />
-    </>
+          </div>
+        ))}
+        {categoriesWithTools.length === 0 && (
+          <div className='flex items-center justify-center py-12 text-gray-500'>
+            No results found
+          </div>
+        )}
+      </main>
+    </div>
   )
 }

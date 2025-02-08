@@ -15,9 +15,11 @@
   "dependencies": {
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
+    "@types/lodash": "^4.17.15",
     "@vercel/kv": "^3.0.0",
     "autoprefixer": "^10.4.20",
     "critters": "^0.0.25",
+    "lodash": "^4.17.21",
     "next": "^15.1.6",
     "postcss": "^8",
     "react": "^19.0.0",
