@@ -7,8 +7,8 @@ import Footer from '../components/Footer'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: '线框风格网站',
-  description: '一个简单的线框风格网站示例',
+  title: 'ai-news',
+  description: 'ai-news',
 }
 
 export default function RootLayout({
@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh">
-      <body className={`${inter.className} min-h-screen flex flex-col`}>
+      <body className={`${inter.className} min-h-screen flex flex-col @container`}>
         <Header />
         <main className="flex-grow">{children}</main>
         <Footer />
