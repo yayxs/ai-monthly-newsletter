@@ -1,1 +1,0 @@
-- OpenAI离职员工组建，Google投资的
